@@ -30,3 +30,5 @@ class Homebody extends React.Component {
     )
   }
 }
+
+export default Homebody;

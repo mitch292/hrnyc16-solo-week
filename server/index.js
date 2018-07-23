@@ -17,13 +17,16 @@ const reddit = new Snoowrap({
 
 
 app.get('/fetchHighlights', (req, res) => {
-  reddit.search({
-    query: 'highlight',
-    subreddit: 'mls',
-    sort: 'hot'
-  })
+  reddit.getSubreddit('mls').getHot({limit: 100})
     .then((response) => {
-      console.log('the response in the server', response)
+      let filteredResponse = []
+      response.forEach((topic) => {
+        if (topic.link_flair_css_class === 'highlight') {
+          filteredResponse.push(topic)
+        }
+      })
+      console.log('the response in the server', filteredResponse)
+      res.send(filteredResponse)
     })
     .catch((err) => {
       console.error('there was an error fetching the highlights', err)
