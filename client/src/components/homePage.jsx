@@ -21,6 +21,7 @@ class HomePage extends React.Component {
     }
     this.getHighlights = this.getHighlights.bind(this);
     this.handleSportSelection = this.handleSportSelection.bind(this)
+    this.handleHomeClick = this.handleHomeClick.bind(this);
   }
 
   getHighlights() {
@@ -60,6 +61,12 @@ class HomePage extends React.Component {
     })
   }
 
+  handleHomeClick() {
+    this.setState({
+      showHighlights: false
+    })
+  }
+
   componentDidMount() {
     this.getHighlights();
   }
@@ -82,6 +89,7 @@ class HomePage extends React.Component {
       <div>
         <h2>filter: HIGHLIGHTS</h2>
         <div>
+          <button value="home" onClick={this.handleHomeClick}>HOME</button> 
           {mlbButton} 
           {mlsButton}
         </div>
