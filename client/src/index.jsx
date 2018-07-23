@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Homebody from './components/homebody.jsx'
+import HomePage from './components/homePage.jsx'
 
 const App = () => (
-  <Homebody />
+  <HomePage />
 )
 
 ReactDOM.render(<App />, document.getElementById('app'))
