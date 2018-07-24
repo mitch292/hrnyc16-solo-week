@@ -123,13 +123,12 @@ app.get('/fetchSoccerHighlights', (req, res) => {
     })
 })
 
+//get users saved highlights
 app.get('/fetchUserHighlights', (req, res) => {
-  console.log('got to the server file', req.query)
   db.fetchUserVids(req.query.id, (err, response) => {
     if (err) {
       console.error('server: there was an error getting this users data from the db', err)
     } else {
-      console.log('success!!!', response.rows)
       let filteredResponse = [];
       response.rows.forEach((row) => {
         filteredResponse.push({
@@ -148,6 +147,31 @@ app.get('/fetchUserHighlights', (req, res) => {
   })
 })
 
+//save highlight
+app.post('/saveMlbHighlight', (req, res) => {
+  //first we need to remove any single quotation marks from the title for postgresql
+  req.body.title.replace(/'/, "");
+  db.saveMlbHighlight(req.body, (err, success) => {
+    if (err) {
+      console.error('error saving this highlight in the database', err)
+    } else {
+      res.sendStatus(201);
+    }
+  })
+})
+
+app.post('/saveOtherHighlight', (req, res) => {
+  //first we need to remove any single quotation marks from the title for postgresql
+  console.log(req.body)
+  req.body.title.replace(/'/, "");
+  db.saveOtherHighlight(req.body, (err, success) => {
+    if (err) {
+      console.error('error saving this highlight in the database', err)
+    } else {
+      res.sendStatus(201);
+    }
+  })
+})
 
 
 app.listen(3000, (err, success) => {

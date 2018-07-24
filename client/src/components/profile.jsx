@@ -1,4 +1,5 @@
 import React from 'react';
+import VideoTileItem from './videoTileItem.jsx';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Profile extends React.Component {
 
   render() {
 
-    let idToggle = this.props.currentUser ?<p>Hello {this.props.currentUser} </p>  :         
+    let idToggle = this.props.currentUser ? <p>Hello {this.props.currentUser} </p>  :         
       <div>
         <h3>Create/Enter your unique identifier to see your saved videos</h3>
         <p><small>CHARACTERS LEFT: {this.state.maxLength} </small></p>
@@ -33,10 +34,15 @@ class Profile extends React.Component {
         </form>
       </div>
 
+      let savedVideos = this.props.savedHighlights.map((highlight) => (
+        <VideoTileItem saved={true} key={highlight.id} sport={highlight.sport} highlight={highlight}/>
+      ))
+
     return (
       <div>
         {idToggle}
-        <p>we'll display the videos here</p>
+        <p>Your saved highlights!!!</p>
+        {savedVideos}
       </div>
 
     )

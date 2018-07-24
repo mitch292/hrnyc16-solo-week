@@ -10,16 +10,21 @@ const VideoTileItem = (props) => {
       <source src={props.highlight.highlightUrl} type="video/mp4" />
     </video>
   } else {
-    highlight = <div dangerouslySetInnerHTML={{__html: props.highlight.secureMediaEmbed.content}} />
+    let embed;
+    if (props.saved) {
+      embed = props.highlight.secureMediaEmbed
+    } else {
+      embed = props.highlight.secureMediaEmbed.content
+    }
+    highlight = <div dangerouslySetInnerHTML={{__html: embed}} />
   }
 
-  let saveButton = props.currentUser ? <button>SAVE</button> : null
+  let saveButton = props.currentUser ? <button onClick={(highlight, sport) => props.saveHighlight(props.highlight, props.sport)}>SAVE</button> : null
 
   return(
   <div>
     <div>
       <h4><a href={`https://www.reddit.com${props.highlight.redditPath}`}> {props.highlight.title}</a></h4>
-      <h5>Upvotes: {props.highlight.upvotes} </h5>
     </div>
     <div>
       {highlight}
@@ -33,4 +38,3 @@ export default VideoTileItem;
 
 
 
-// <div dangerouslySetInnerHTML={convertMediaEmbed(props.highlight.secureMediaEmbed.content)} />

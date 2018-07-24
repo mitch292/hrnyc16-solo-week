@@ -27,12 +27,14 @@ class HomePage extends React.Component {
         ready: false
       },
       showHighlights: false,
-      currentUser: null
+      currentUser: null,
+      userSavedHighlights: []
     }
     this.getHighlights = this.getHighlights.bind(this);
     this.handleSportSelection = this.handleSportSelection.bind(this)
     this.handleHomeClick = this.handleHomeClick.bind(this);
     this.handleIdSubmit = this.handleIdSubmit.bind(this);
+    this.saveHighlight = this.saveHighlight.bind(this);
   }
 
   getHighlights() {
@@ -95,6 +97,60 @@ class HomePage extends React.Component {
     
   }
 
+  saveHighlight(highlight, sport) {
+    let formattedHighlight = highlight;
+    formattedHighlight.category = sport
+    formattedHighlight.userId = this.state.currentUser
+
+    if (formattedHighlight.category === 'mlb') {
+      axios.post('/saveMlbHighlight', formattedHighlight)
+      .then((response) => {
+        console.log('highlight saved!')
+        axios.get('/fetchUserHighlights', {
+          params: {
+            id: formattedHighlight.userId
+          }
+        })
+          .then((response) => {
+            console.log('the users videos in the clinet', response)
+            this.setState({
+              userSavedHighlights: response.data
+            })
+          })
+          .catch((err) => {
+            console.error('there was an error getting the users data from the db', err)
+          })
+      })
+      .catch((err) => {
+        console.error('there was an error saving this highlight', err)
+      })
+    } else {
+      axios.post('/saveOtherHighlight', formattedHighlight)
+        .then((response) => {
+          console.log('response for other highlights', response)
+          axios.get('/fetchUserHighlights', {
+            params: {
+              id: formattedHighlight.userId
+            }
+          })
+            .then((response) => {
+              console.log('the users videos in the clinet', response)
+              this.setState({
+                userSavedHighlights: response.data
+              })
+            })
+            .catch((err) => {
+              console.error('there was an error getting the users data from the db', err)
+            })
+        })
+        .catch((err) =>  {
+          console.error('there was an error saving this highlight to the database')
+        })
+    }
+
+    
+  }
+
   handleSportSelection(e) {
     this.setState({
       selectedHighlights: this.state[e.target.value].highlights,
@@ -110,7 +166,6 @@ class HomePage extends React.Component {
   }
 
   handleIdSubmit(e, id) {
-    console.log('hellloooo', id)
     e.preventDefault()
     this.setState({
       currentUser: id
@@ -123,6 +178,9 @@ class HomePage extends React.Component {
     })
       .then((response) => {
         console.log('the users videos in the clinet', response)
+        this.setState({
+          userSavedHighlights: response.data
+        })
       })
       .catch((err) => {
         console.error('there was an error getting the users data from the db', err)
@@ -137,8 +195,8 @@ class HomePage extends React.Component {
 
   render() {
     let highlightToggle = this.state.showHighlights ?
-      <VideoTileList currentUser={this.state.currentUser} sport={this.state.selectedSport} highlights={this.state.selectedHighlights} /> : 
-      <Profile currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
+      <VideoTileList saveHighlight={this.saveHighlight} currentUser={this.state.currentUser} sport={this.state.selectedSport} highlights={this.state.selectedHighlights} /> : 
+      <Profile savedHighlights={this.state.userSavedHighlights} currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
     
     let mlbButton = this.state.mlb.ready ? 
       <button value="mlb" onClick={this.handleSportSelection}>MLB</button> :

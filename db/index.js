@@ -14,7 +14,6 @@ client.query('SELECT $1::text as message', ['Hello world!'], (err, response) => 
 })
 
 let fetchUserVids = (userId, callback) => {
-  console.log('got to the db file', userId)
   const text = 'SELECT * FROM highlights WHERE username = $1';
   const values = [userId]
   client.query(text, values, (err, response) => {
@@ -26,5 +25,32 @@ let fetchUserVids = (userId, callback) => {
   })
 }
 
-exports.fetchUserVids = fetchUserVids
+let saveMlbHighlight = (params, callback) => {
+  const text = 'INSERT INTO highlights (username, author, highlight_url, reddit_id, reddit_path, title, category) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+  const values = [params.userId, params.author.name, params.highlightUrl, params.id, params.redditPath, params.title, params.category];
+  client.query(text, values, (err, response) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, response);
+    }
+  })
+}
+
+let saveOtherHighlight = (params, callback) => {
+  console.log('we need to format this', params)
+  const text = 'INSERT INTO highlights (username, author, highlight_url, reddit_id, media_embed, reddit_path, secure_media_embed, title, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
+  const values = [params.userId, params.author.name, params.highlightUrl, params.id, params.mediaEmbed.content, params.redditPath, params.secureMediaEmbed.content, params.title, params.category];
+  client.query(text, values, (err, response) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, response);
+    }
+  })
+}
+
+exports.fetchUserVids = fetchUserVids;
+exports.saveMlbHighlight = saveMlbHighlight;
+exports.saveOtherHighlight = saveOtherHighlight;
 
