@@ -2,23 +2,16 @@ import React from 'react';
 
 const VideoTileItem = (props) => {
 
-    //for mls videos this is needed - the iframe of the video comes as a string
-    //to utilize react's dangerouslySetInnerHTML we must pass it a 
-    // let convertMediaEmbed = (string) => {
-    //   return {__html: string}
-    // }
   let highlight;
 
-  if (props.sport === 'mls') {
-    highlight = <div dangerouslySetInnerHTML={{__html: props.highlight.secureMediaEmbed.content}} />
-  } else {
+  if (props.sport === 'mlb') {
     highlight = 
-      <video width="600" height="350" controls>
-        <source src={props.highlight.highlightUrl} type="video/mp4" />
-      </video>
+    <video width="600" height="350" controls>
+      <source src={props.highlight.highlightUrl} type="video/mp4" />
+    </video>
+  } else {
+    highlight = <div dangerouslySetInnerHTML={{__html: props.highlight.secureMediaEmbed.content}} />
   }
-
-
 
   return(
   <div>

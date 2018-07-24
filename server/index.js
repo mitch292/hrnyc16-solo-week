@@ -18,6 +18,7 @@ const reddit = new Snoowrap({
 })
 
 
+//fetch our highlights
 app.get('/fetchMLSHighlights', (req, res) => {
   reddit.getSubreddit('mls').getHot({limit: 100})
     .then((response) => {
@@ -68,6 +69,56 @@ app.get('/fetchMLBHighlights', (req, res) => {
     })
     .catch((err) => {
       console.error('there was an error getting the mlb highlights', err)
+    })
+})
+
+app.get('/fetchNBAHighlights', (req, res) => {
+  reddit.getSubreddit('nba').getHot({limit: 100})
+    .then((response) => {
+      let filteredResponse = []
+      response.forEach((topic) => {
+        if (topic.link_flair_text === 'Highlights') {
+          filteredResponse.push({
+            id: topic.id,
+            author: topic.author,
+            mediaEmbed: topic.media_embed,
+            secureMediaEmbed: topic.secure_media_embed,
+            redditPath: topic.permalink,
+            title: topic.title,
+            highlightUrl: topic.url,
+            upvotes: topic.ups
+          })
+        }
+      })
+      res.send(filteredResponse);
+    })
+    .catch((err) => {
+      console.error('server: there was an error fetching the nba highlights', err)
+    })
+})
+
+app.get('/fetchSoccerHighlights', (req, res) => {
+  reddit.getSubreddit('soccer').getHot({limit: 100})
+    .then((response) => {
+      let filteredResponse = [];
+      response.forEach((topic) => {
+        if(topic.link_flair_text === 'Media') {
+          filteredResponse.push({
+            id: topic.id,
+            author: topic.author,
+            mediaEmbed: topic.media_embed,
+            secureMediaEmbed: topic.secure_media_embed,
+            redditPath: topic.permalink,
+            title: topic.title,
+            highlightUrl: topic.url,
+            upvotes: topic.ups
+          })
+        }
+      })
+      res.send(filteredResponse)
+    })
+    .catch((err) => {
+      console.error('server: there was an error fetching the world soccer highlights', err)
     })
 })
 

@@ -17,6 +17,14 @@ class HomePage extends React.Component {
         ready: false
 
       },
+      nba: {
+        highlights: [],
+        ready: false
+      },
+      worldSoccer: {
+        highlights: [],
+        ready: false
+      },
       showHighlights: false,
     }
     this.getHighlights = this.getHighlights.bind(this);
@@ -39,7 +47,7 @@ class HomePage extends React.Component {
         console.error('there was an error fetching the highlights:', err)
       })
     
-      axios.get('/fetchMLBHighlights')
+    axios.get('/fetchMLBHighlights')
       .then((response) => {
         this.setState({
           mlb: {
@@ -51,6 +59,34 @@ class HomePage extends React.Component {
       .catch((err) => {
         console.error('there was an error fetching the mlb highlights', err)
       })
+
+    axios.get('/fetchNBAHighlights')
+      .then((response) => {
+        this.setState({
+          nba: {
+            highlights: response.data,
+            ready: true
+          }
+        })
+      })
+      .catch((err) => {
+        console.error('there was an error fetching the nba highlights', err)
+      })
+    
+    axios.get('/fetchSoccerHighlights')
+      .then((response) => {
+        this.setState({
+          worldSoccer: {
+            highlights: response.data,
+            ready: true
+          }
+        })
+        console.log('what the world soccer data looks like', response.data)
+      })
+      .catch((err) => {
+        console.error('there was an error fetching the world soccer highlights', err)
+      })
+    
   }
 
   handleSportSelection(e) {
@@ -84,6 +120,14 @@ class HomePage extends React.Component {
       <button value="mls" onClick={this.handleSportSelection}>MLS</button> : 
       <button value="mls" onClick={this.handleSportSelection}>Please wait...</button>
 
+    let nbaButton = this.state.nba.ready ?
+    <button value="nba" onClick={this.handleSportSelection}>NBA</button> : 
+    <button value="nba" onClick={this.handleSportSelection}>Please wait...</button>
+
+    let worldSoccerButton = this.state.nba.ready ?
+    <button value="worldSoccer" onClick={this.handleSportSelection}>WORLD SOCCER</button> : 
+    <button value="worldSoccer" onClick={this.handleSportSelection}>Please wait...</button>
+
 
     return (
       <div>
@@ -92,6 +136,8 @@ class HomePage extends React.Component {
           <button value="home" onClick={this.handleHomeClick}>HOME</button> 
           {mlbButton} 
           {mlsButton}
+          {nbaButton}
+          {worldSoccerButton}
         </div>
         <div>
           {highlightToggle}
