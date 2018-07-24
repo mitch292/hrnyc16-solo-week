@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import VideoTileList from './videoTileList.jsx';
+import Profile from './profile.jsx';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -26,16 +27,19 @@ class HomePage extends React.Component {
         ready: false
       },
       showHighlights: false,
+      currentUser: null
     }
     this.getHighlights = this.getHighlights.bind(this);
     this.handleSportSelection = this.handleSportSelection.bind(this)
     this.handleHomeClick = this.handleHomeClick.bind(this);
+    this.handleIdSubmit = this.handleIdSubmit.bind(this);
   }
 
   getHighlights() {
     
     axios.get('/fetchMLSHighlights')
       .then((response) => {
+        console.log('mls data', response.data)
         this.setState({
           mls: {
             highlights: response.data,
@@ -49,6 +53,7 @@ class HomePage extends React.Component {
     
     axios.get('/fetchMLBHighlights')
       .then((response) => {
+        console.log('mlb data', response.data)
         this.setState({
           mlb: {
             highlights: response.data,
@@ -62,6 +67,7 @@ class HomePage extends React.Component {
 
     axios.get('/fetchNBAHighlights')
       .then((response) => {
+        console.log('nba data', response.data)
         this.setState({
           nba: {
             highlights: response.data,
@@ -75,13 +81,13 @@ class HomePage extends React.Component {
     
     axios.get('/fetchSoccerHighlights')
       .then((response) => {
+        console.log('soccer data', response.data)
         this.setState({
           worldSoccer: {
             highlights: response.data,
             ready: true
           }
         })
-        console.log('what the world soccer data looks like', response.data)
       })
       .catch((err) => {
         console.error('there was an error fetching the world soccer highlights', err)
@@ -103,14 +109,36 @@ class HomePage extends React.Component {
     })
   }
 
+  handleIdSubmit(e, id) {
+    console.log('hellloooo', id)
+    e.preventDefault()
+    this.setState({
+      currentUser: id
+    }) 
+    
+    axios.get('/fetchUserHighlights', {
+      params: {
+        id: id
+      }
+    })
+      .then((response) => {
+        console.log('the users videos in the clinet', response)
+      })
+      .catch((err) => {
+        console.error('there was an error getting the users data from the db', err)
+      })
+
+
+  }
+
   componentDidMount() {
     this.getHighlights();
   }
 
   render() {
     let highlightToggle = this.state.showHighlights ?
-      <VideoTileList sport={this.state.selectedSport} highlights={this.state.selectedHighlights} /> : 
-      null;
+      <VideoTileList currentUser={this.state.currentUser} sport={this.state.selectedSport} highlights={this.state.selectedHighlights} /> : 
+      <Profile currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
     
     let mlbButton = this.state.mlb.ready ? 
       <button value="mlb" onClick={this.handleSportSelection}>MLB</button> :

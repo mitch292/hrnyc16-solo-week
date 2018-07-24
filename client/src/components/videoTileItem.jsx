@@ -13,15 +13,18 @@ const VideoTileItem = (props) => {
     highlight = <div dangerouslySetInnerHTML={{__html: props.highlight.secureMediaEmbed.content}} />
   }
 
+  let saveButton = props.currentUser ? <button>SAVE</button> : null
+
   return(
   <div>
     <div>
-      <h4>{props.highlight.title}</h4>
+      <h4><a href={`https://www.reddit.com${props.highlight.redditPath}`}> {props.highlight.title}</a></h4>
       <h5>Upvotes: {props.highlight.upvotes} </h5>
     </div>
     <div>
       {highlight}
     </div>
+    {saveButton}
   </div>
   )
 };

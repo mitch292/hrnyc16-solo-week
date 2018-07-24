@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const Snoowrap = require('snoowrap'); //reddit api wrapper
 const CONFIG = require('./../config.js');
+const db = require('../db/index.js');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
@@ -120,6 +121,31 @@ app.get('/fetchSoccerHighlights', (req, res) => {
     .catch((err) => {
       console.error('server: there was an error fetching the world soccer highlights', err)
     })
+})
+
+app.get('/fetchUserHighlights', (req, res) => {
+  console.log('got to the server file', req.query)
+  db.fetchUserVids(req.query.id, (err, response) => {
+    if (err) {
+      console.error('server: there was an error getting this users data from the db', err)
+    } else {
+      console.log('success!!!', response.rows)
+      let filteredResponse = [];
+      response.rows.forEach((row) => {
+        filteredResponse.push({
+          id: row.reddit_id,
+          author: row.author,
+          mediaEmbed: row.media_embed,
+          secureMediaEmbed: row.secure_media_embed,
+          redditPath: row.reddit_path,
+          title: row.title,
+          highlightUrl: row.highlight_url,
+          sport: row.category
+        })
+      })
+      res.send(filteredResponse)
+    }
+  })
 })
 
 
