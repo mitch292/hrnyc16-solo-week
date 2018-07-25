@@ -200,16 +200,19 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        <h2>filter: HIGHLIGHTS</h2>
-        <NotificationContainer />
-        {logout}
-        <div>
-          <button value="home" onClick={this.handleHomeClick}>HOME</button> 
-          {mlbButton} 
-          {mlsButton}
-          {nbaButton}
-          {worldSoccerButton}
-        </div>
+        <header className="primary-header container group">
+          <h2 className="logo">filter: HIGHLIGHTS</h2>
+          <NotificationContainer />
+          <div className="nav primary-nav">
+            <button value="home" onClick={this.handleHomeClick}>HOME</button> 
+            {mlbButton} 
+            {mlsButton}
+            {nbaButton}
+            {worldSoccerButton}
+            {logout}
+          </div>
+        </header>
+        <div className="spacer"></div>
         <div>
           {highlightToggle}
         </div>

@@ -23,10 +23,10 @@ const VideoTileItem = (props) => {
   }
 
   //should only see save button if user is logged in were not displaying saved data....from the user's page the app is not passing a currentUser prop to this component
-  let saveButton = props.currentUser ? <button onClick={(highlight, sport) => props.saveHighlight(props.highlight, props.sport)}>SAVE</button> : null
+  let saveButton = props.currentUser ? <button onClick={(highlight, sport) => props.saveHighlight(props.highlight, props.sport)} className="other">SAVE</button> : null
 
   //should see delete button if were on the users profile
-  let deleteButton = props.saved ? <button onClick={(redditId) => props.removeSavedHighlight(props.highlight.id)}>REMOVE</button> : null;
+  let deleteButton = props.saved ? <button onClick={(redditId) => props.removeSavedHighlight(props.highlight.id)} className="other">REMOVE</button> : null;
 
   return(
   <div>
@@ -38,6 +38,7 @@ const VideoTileItem = (props) => {
     </div>
     {saveButton}
     {deleteButton}
+    <div className="line"></div>
   </div>
   )
 };

@@ -34,16 +34,16 @@ class Profile extends React.Component {
 
   render() {
 
-    let idToggle = this.props.currentUser ? <p>Hello {this.props.currentUser} </p>  :         
+    let idToggle = this.props.currentUser ? <p className="greeting">Hello {this.props.currentUser}! </p>  :         
       <div>
-        <h3>Create/Enter your unique identifier to see your saved videos</h3>
-        <p><small>CHARACTERS LEFT: {this.state.maxLength} </small></p>
+        <h3 className="greeting">Create/Enter your unique identifier to see your saved videos</h3>
+        <p className="chars"><small>CHARACTERS LEFT: {this.state.maxLength} </small></p>
         <form onSubmit={(event) => this.props.handleIdSubmit(event, this.state.idValue)}>
           <label>
             Unique ID: 
             <input type="text" value={this.state.idValue} onChange={(e) => this.handleIdChange(e)}/>
           </label>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" className="other"/>
         </form>
       </div>
 
@@ -52,7 +52,7 @@ class Profile extends React.Component {
       ))
 
     return (
-      <div>
+      <div className="content">
         {idToggle}
         {savedVideos}
       </div>

@@ -1,0 +1,182 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+
+/*
+========================================================
+APP BACKGROUND
+========================================================
+*/
+
+#app {
+  background-color: rgba(12, 35, 64, 0.795);
+}
+
+
+/*
+========================================================
+TITLE / HEADER
+========================================================
+*/
+
+.logo {
+  padding: 30px 0 22px 0;
+  float: left;
+  border-top: 4px solid #f7f5ed;
+  float: left;
+  font-size: 30px;
+  font-weight: 100;
+  letter-spacing: .5px;
+  line-height: 35px;
+  padding: 30px 0 22px 0;
+  text-transform: uppercase;
+  color: #f7f5ed
+  
+}
+
+/*
+========================================================
+GRID
+========================================================
+*/
+
+.container {
+  margin: 0 auto;
+  width: 960px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.grid {
+  margin: 0 auto;
+  width: 960px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/*
+========================================================
+NAVIGATION
+========================================================
+*/
+.primary-nav {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.nav {
+  text-align: right;
+}
+.nav button {
+  display: inline-block;
+  margin: 2px;
+  vertical-align: top;
+  background-color: #f7f5ed;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+.nav button:last-child {
+  margin-right: 0;
+}
+
+
+/*
+========================================================
+SPACER
+========================================================
+*/
+.spacer {
+  width: 100%;
+  height: 95px;
+}
+
+
+/*
+========================================================
+PROFILE
+========================================================
+*/
+
+.content {
+  color: #4b4d4f;
+  line-height: 44px;
+  padding: 22px 80px 66px 80px;
+  text-align: center;
+  background-color: #f7f5ed;
+}
+.greeting {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: .5px;
+}
+.chars {
+  font-size: 12px;
+}
+
+/*
+========================================================
+SPACER
+========================================================
+*/
+.line {
+  width: 100%;
+  height: 5px;
+  background-color: rgba(12, 35, 64, 0.795);
+}
+
+
+/*
+========================================================
+BUTTONS
+========================================================
+*/
+.other {
+  display: inline-block;
+  margin: 2px;
+  background-color: rgba(12, 35, 64, 0.795);
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #f7f5ed;
+}
