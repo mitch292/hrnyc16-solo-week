@@ -1,5 +1,6 @@
 import React from 'react';
 import VideoTileItem from './videoTileItem.jsx';
+import axios from 'axios';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class Profile extends React.Component {
       maxLength: 25
     }
     this.handleIdChange = this.handleIdChange.bind(this)
+    this.removeSavedItem = this.removeSavedItem.bind(this)
   }
 
   handleIdChange(e) {
@@ -16,6 +18,17 @@ class Profile extends React.Component {
       idValue: e.target.value,
       maxLength: 25 - e.target.value.length
     })
+  }
+
+  removeSavedItem(redditId) {
+    axios.delete('/removeSaved', {params: {redditId: redditId}})
+      .then((success) => {
+        console.log()
+        this.props.fetchUserHighlights();
+      })
+      .catch((err) => {
+        console.error(('there was an error deleting this video from your profile', err))
+      })
   }
 
 
@@ -35,7 +48,7 @@ class Profile extends React.Component {
       </div>
 
       let savedVideos = this.props.savedHighlights.map((highlight) => (
-        <VideoTileItem saved={true} key={highlight.id} sport={highlight.sport} highlight={highlight}/>
+        <VideoTileItem removeSavedHighlight={this.removeSavedItem} saved={true} key={highlight.id} sport={highlight.sport} highlight={highlight}/>
       ))
 
     return (

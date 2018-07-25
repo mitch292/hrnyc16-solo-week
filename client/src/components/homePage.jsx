@@ -107,7 +107,6 @@ class HomePage extends React.Component {
     if (formattedHighlight.category === 'mlb') {
       axios.post('/saveMlbHighlight', formattedHighlight)
       .then((response) => {
-        console.log('highlight saved!')
         NotificationManager.success('', 'Highlight saved!', 2000)
         this.fetchUserHighlights();
       })
@@ -117,7 +116,6 @@ class HomePage extends React.Component {
     } else {
       axios.post('/saveOtherHighlight', formattedHighlight)
         .then((response) => {
-          console.log('highlight saved!')
           NotificationManager.success('', 'Highlight saved!', 2000)
           this.fetchUserHighlights();
         })
@@ -159,7 +157,6 @@ class HomePage extends React.Component {
       }
     })
       .then((response) => {
-        console.log('the users videos in the clinet', response)
         this.setState({
           userSavedHighlights: response.data
         })
@@ -167,7 +164,7 @@ class HomePage extends React.Component {
       .catch((err) => {
         console.error('there was an error getting the users data from the db', err)
       })
-  } 
+  }
 
   componentDidMount() {
     this.getHighlights();
@@ -176,7 +173,7 @@ class HomePage extends React.Component {
   render() {
     let highlightToggle = this.state.showHighlights ?
       <VideoTileList saveHighlight={this.saveHighlight} currentUser={this.state.currentUser} sport={this.state.selectedSport} highlights={this.state.selectedHighlights} /> : 
-      <Profile savedHighlights={this.state.userSavedHighlights} currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
+      <Profile fetchUserHighlights={this.fetchUserHighlights} savedHighlights={this.state.userSavedHighlights} currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
     
     let mlbButton = this.state.mlb.ready ? 
       <button value="mlb" onClick={this.handleSportSelection}>MLB</button> :

@@ -160,6 +160,7 @@ app.post('/saveMlbHighlight', (req, res) => {
   })
 })
 
+
 app.post('/saveOtherHighlight', (req, res) => {
   //first we need to remove any single quotation marks from the title for postgresql
   req.body.title.replace(/'/, "");
@@ -168,6 +169,17 @@ app.post('/saveOtherHighlight', (req, res) => {
       console.error('error saving this highlight in the database', err)
     } else {
       res.sendStatus(201);
+    }
+  })
+})
+
+app.delete('/removeSaved', (req, res) => {
+  console.log('req query', req.query)
+  db.deleteSavedHighlight(req.query, (err, success) => {
+    if (err) {
+      console.error('there was an error removing this highlight from your profile', err)
+    } else {
+      res.send()
     }
   })
 })

@@ -49,7 +49,20 @@ let saveOtherHighlight = (params, callback) => {
   })
 }
 
+let deleteSavedHighlight = (params, callback) => {
+  const text = 'DELETE FROM highlights WHERE reddit_id = $1'
+  const values = [params.redditId]
+  client.query(text, values, (err, response) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, response)
+    }
+  })
+}
+
 exports.fetchUserVids = fetchUserVids;
 exports.saveMlbHighlight = saveMlbHighlight;
 exports.saveOtherHighlight = saveOtherHighlight;
+exports.deleteSavedHighlight = deleteSavedHighlight;
 
