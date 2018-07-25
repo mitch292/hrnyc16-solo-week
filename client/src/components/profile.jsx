@@ -41,7 +41,6 @@ class Profile extends React.Component {
     return (
       <div>
         {idToggle}
-        <p>Your saved highlights!!!</p>
         {savedVideos}
       </div>
 

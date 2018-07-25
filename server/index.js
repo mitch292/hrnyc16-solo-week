@@ -162,7 +162,6 @@ app.post('/saveMlbHighlight', (req, res) => {
 
 app.post('/saveOtherHighlight', (req, res) => {
   //first we need to remove any single quotation marks from the title for postgresql
-  console.log(req.body)
   req.body.title.replace(/'/, "");
   db.saveOtherHighlight(req.body, (err, success) => {
     if (err) {

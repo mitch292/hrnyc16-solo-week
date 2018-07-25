@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import VideoTileList from './videoTileList.jsx';
 import Profile from './profile.jsx';
 
@@ -35,6 +36,7 @@ class HomePage extends React.Component {
     this.handleHomeClick = this.handleHomeClick.bind(this);
     this.handleIdSubmit = this.handleIdSubmit.bind(this);
     this.saveHighlight = this.saveHighlight.bind(this);
+    this.fetchUserHighlights = this.fetchUserHighlights.bind(this);
   }
 
   getHighlights() {
@@ -106,20 +108,8 @@ class HomePage extends React.Component {
       axios.post('/saveMlbHighlight', formattedHighlight)
       .then((response) => {
         console.log('highlight saved!')
-        axios.get('/fetchUserHighlights', {
-          params: {
-            id: formattedHighlight.userId
-          }
-        })
-          .then((response) => {
-            console.log('the users videos in the clinet', response)
-            this.setState({
-              userSavedHighlights: response.data
-            })
-          })
-          .catch((err) => {
-            console.error('there was an error getting the users data from the db', err)
-          })
+        NotificationManager.success('', 'Highlight saved!', 2000)
+        this.fetchUserHighlights();
       })
       .catch((err) => {
         console.error('there was an error saving this highlight', err)
@@ -127,24 +117,12 @@ class HomePage extends React.Component {
     } else {
       axios.post('/saveOtherHighlight', formattedHighlight)
         .then((response) => {
-          console.log('response for other highlights', response)
-          axios.get('/fetchUserHighlights', {
-            params: {
-              id: formattedHighlight.userId
-            }
-          })
-            .then((response) => {
-              console.log('the users videos in the clinet', response)
-              this.setState({
-                userSavedHighlights: response.data
-              })
-            })
-            .catch((err) => {
-              console.error('there was an error getting the users data from the db', err)
-            })
+          console.log('highlight saved!')
+          NotificationManager.success('', 'Highlight saved!', 2000)
+          this.fetchUserHighlights();
         })
         .catch((err) =>  {
-          console.error('there was an error saving this highlight to the database')
+          console.error('there was an error saving this highlight to the database', err)
         })
     }
 
@@ -169,11 +147,15 @@ class HomePage extends React.Component {
     e.preventDefault()
     this.setState({
       currentUser: id
-    }) 
-    
+    }, this.fetchUserHighlights(id)) 
+
+  }
+
+  fetchUserHighlights(id) {
+    let userId = id || this.state.currentUser
     axios.get('/fetchUserHighlights', {
       params: {
-        id: id
+        id: userId
       }
     })
       .then((response) => {
@@ -185,9 +167,7 @@ class HomePage extends React.Component {
       .catch((err) => {
         console.error('there was an error getting the users data from the db', err)
       })
-
-
-  }
+  } 
 
   componentDidMount() {
     this.getHighlights();
@@ -218,6 +198,7 @@ class HomePage extends React.Component {
     return (
       <div>
         <h2>filter: HIGHLIGHTS</h2>
+        <NotificationContainer />
         <div>
           <button value="home" onClick={this.handleHomeClick}>HOME</button> 
           {mlbButton} 

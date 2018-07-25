@@ -38,7 +38,6 @@ let saveMlbHighlight = (params, callback) => {
 }
 
 let saveOtherHighlight = (params, callback) => {
-  console.log('we need to format this', params)
   const text = 'INSERT INTO highlights (username, author, highlight_url, reddit_id, media_embed, reddit_path, secure_media_embed, title, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
   const values = [params.userId, params.author.name, params.highlightUrl, params.id, params.mediaEmbed.content, params.redditPath, params.secureMediaEmbed.content, params.title, params.category];
   client.query(text, values, (err, response) => {
