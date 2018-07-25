@@ -29,7 +29,8 @@ class HomePage extends React.Component {
       },
       showHighlights: false,
       currentUser: null,
-      userSavedHighlights: []
+      userSavedHighlights: [],
+      logout: false
     }
     this.getHighlights = this.getHighlights.bind(this);
     this.handleSportSelection = this.handleSportSelection.bind(this)
@@ -173,7 +174,7 @@ class HomePage extends React.Component {
   render() {
     let highlightToggle = this.state.showHighlights ?
       <VideoTileList saveHighlight={this.saveHighlight} currentUser={this.state.currentUser} sport={this.state.selectedSport} highlights={this.state.selectedHighlights} /> : 
-      <Profile fetchUserHighlights={this.fetchUserHighlights} savedHighlights={this.state.userSavedHighlights} currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
+      <Profile logout={this.state.logout} fetchUserHighlights={this.fetchUserHighlights} savedHighlights={this.state.userSavedHighlights} currentUser={this.state.currentUser} handleIdSubmit={this.handleIdSubmit} />;
     
     let mlbButton = this.state.mlb.ready ? 
       <button value="mlb" onClick={this.handleSportSelection}>MLB</button> :
@@ -184,18 +185,24 @@ class HomePage extends React.Component {
       <button value="mls" onClick={this.handleSportSelection}>Please wait...</button>
 
     let nbaButton = this.state.nba.ready ?
-    <button value="nba" onClick={this.handleSportSelection}>NBA</button> : 
-    <button value="nba" onClick={this.handleSportSelection}>Please wait...</button>
+      <button value="nba" onClick={this.handleSportSelection}>NBA</button> : 
+      <button value="nba" onClick={this.handleSportSelection}>Please wait...</button>
 
     let worldSoccerButton = this.state.nba.ready ?
-    <button value="worldSoccer" onClick={this.handleSportSelection}>WORLD SOCCER</button> : 
-    <button value="worldSoccer" onClick={this.handleSportSelection}>Please wait...</button>
+      <button value="worldSoccer" onClick={this.handleSportSelection}>WORLD SOCCER</button> : 
+      <button value="worldSoccer" onClick={this.handleSportSelection}>Please wait...</button>
+
+    let logout = this.state.currentUser ? 
+      <button onClick={() => this.setState({currentUser: null, userSavedHighlights: [], logout: true})}>LOGOUT</button> :
+      null
+
 
 
     return (
       <div>
         <h2>filter: HIGHLIGHTS</h2>
         <NotificationContainer />
+        {logout}
         <div>
           <button value="home" onClick={this.handleHomeClick}>HOME</button> 
           {mlbButton} 
