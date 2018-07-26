@@ -4,6 +4,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import VideoTileList from './videoTileList.jsx';
 import Profile from './profile.jsx';
 
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props)

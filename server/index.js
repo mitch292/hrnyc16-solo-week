@@ -78,7 +78,7 @@ app.get('/fetchNBAHighlights', (req, res) => {
     .then((response) => {
       let filteredResponse = []
       response.forEach((topic) => {
-        if (topic.link_flair_text === 'Highlights') {
+        if (topic.link_flair_text === 'Highlights'&& topic.secure_media_embed.content) {
           filteredResponse.push({
             id: topic.id,
             author: topic.author,
@@ -103,7 +103,7 @@ app.get('/fetchSoccerHighlights', (req, res) => {
     .then((response) => {
       let filteredResponse = [];
       response.forEach((topic) => {
-        if(topic.link_flair_text === 'Media') {
+        if(topic.link_flair_text === 'Media' && topic.secure_media_embed.content) {
           filteredResponse.push({
             id: topic.id,
             author: topic.author,
