@@ -12,9 +12,7 @@ const client = new Client({
 
 })
 
-client.connect().catch((err) => {
-  console.error('there was an error connecting to the db', err.stack)
-});
+client.connect()
 
 client.query('SELECT $1::text as message', ['Hello world!'], (err, response) => {
   if (err) {
@@ -22,6 +20,7 @@ client.query('SELECT $1::text as message', ['Hello world!'], (err, response) => 
   } else {
     console.log(response.rows[0].message);
   }
+  client.end()
 })
 
 let fetchUserVids = (userId, callback) => {
@@ -33,6 +32,7 @@ let fetchUserVids = (userId, callback) => {
     } else {
       callback(null, response)
     }
+    client.end()
   })
 }
 
@@ -45,6 +45,7 @@ let saveMlbHighlight = (params, callback) => {
     } else {
       callback(null, response);
     }
+    client.end()
   })
 }
 
@@ -57,6 +58,7 @@ let saveOtherHighlight = (params, callback) => {
     } else {
       callback(null, response);
     }
+    client.end()
   })
 }
 
@@ -69,6 +71,7 @@ let deleteSavedHighlight = (params, callback) => {
     } else {
       callback(null, response)
     }
+    client.end()
   })
 }
 
