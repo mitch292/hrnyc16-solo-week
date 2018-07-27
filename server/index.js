@@ -7,11 +7,11 @@ const db = require('../db/index.js');
 let port = process.env.PORT || 3000;
 
 const CONFIG = {
-  userAgent: process.env.userAgent,
-  clientId: process.env.clientId,
-  clientSecret: process.env.clientSecret,
-  username: process.env.username,
-  password: process.env.password
+  userAgent: process.env.USER_AGENT,
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  username: process.env.REDDIT_USERNAME,
+  password: process.env.REDDIT_PASSWORD
 }
 
 app.use(express.static(__dirname + '/../client/dist'));
