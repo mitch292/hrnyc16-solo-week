@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const Snoowrap = require('snoowrap'); //reddit api wrapper
-const CONFIG = require('./../config.js');
+// const CONFIG = require('./../config.js');
 const db = require('../db/index.js');
 let port = process.env.PORT || 3000;
 
