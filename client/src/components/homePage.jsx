@@ -203,7 +203,9 @@ class HomePage extends React.Component {
       <div>
         <header className="primary-header container group">
           <h2 className="logo">filter: HIGHLIGHTS</h2>
-          <NotificationContainer />
+          <div className="notification">
+            <NotificationContainer />
+          </div>
           <div className="nav primary-nav">
             <button value="home" onClick={this.handleHomeClick}>HOME</button> 
             {mlbButton} 

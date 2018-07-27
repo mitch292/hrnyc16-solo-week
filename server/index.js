@@ -4,6 +4,15 @@ const bodyParser = require('body-parser');
 const Snoowrap = require('snoowrap'); //reddit api wrapper
 const CONFIG = require('./../config.js');
 const db = require('../db/index.js');
+let port = process.env.PORT || 3000;
+
+const CONFIG = {
+  userAgent: process.env.userAgent,
+  clientId: process.env.clientId,
+  clientSecret: process.env.clientSecret,
+  username: process.env.username,
+  password: process.env.password
+}
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
@@ -185,10 +194,10 @@ app.delete('/removeSaved', (req, res) => {
 })
 
 
-app.listen(3000, (err, success) => {
+app.listen(port, (err, success) => {
   if (err) {
     console.error('there was an error starting the server', err)
   } else {
-    console.log('listening on port 3000');
+    console.log('listening on port', port);
   }
 })

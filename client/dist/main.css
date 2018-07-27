@@ -180,3 +180,17 @@ BUTTONS
   padding: 5px 10px;
   color: #f7f5ed;
 }
+
+/*
+========================================================
+NOTIFICATIONS
+========================================================
+*/
+.notification {
+  position: fixed;
+  top: 20px;
+  font-size: 18px;
+  float: right;
+  background-color: rgba(12, 35, 64, 0.795);
+  color: #f7f5ed;
+}
