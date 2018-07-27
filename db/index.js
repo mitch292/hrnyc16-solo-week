@@ -12,7 +12,9 @@ const client = new Client({
 
 })
 
-client.connect();
+client.connect().catch((err) => {
+  console.error('there was an error connecting to the db', err.stack)
+});
 
 client.query('SELECT $1::text as message', ['Hello world!'], (err, response) => {
   if (err) {
