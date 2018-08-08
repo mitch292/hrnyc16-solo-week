@@ -4,10 +4,10 @@ const { Client } = require('pg')
 // });
 
 const client = new Client({
-  user: 'mitch',
-  host: 'hrnyc16-solo-week.c9jk9yiq6myw.us-east-1.rds.amazonaws.com',
-  database: 'soloweek',
-  password: 'mitchell',
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   port: 5432
 
 })
