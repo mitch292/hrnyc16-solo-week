@@ -115,7 +115,7 @@ NAVIGATION
   vertical-align: top;
   background-color: #f7f5ed;
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 5px 10px;
 }
 .nav button:last-child {
   margin-right: 0;
@@ -177,7 +177,7 @@ BUTTONS
   margin: 2px;
   background-color: rgba(12, 35, 64, 0.795);
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 3px 5px;
   color: #f7f5ed;
 }
 

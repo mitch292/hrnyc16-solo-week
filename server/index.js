@@ -2,21 +2,26 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const Snoowrap = require('snoowrap'); //reddit api wrapper
-// const CONFIG = require('./../config.js');
+const CONFIG = require('./../config.js');
 const db = require('../db/index.js');
 let port = process.env.PORT || 3000;
 
-const CONFIG = {
-  userAgent: process.env.USER_AGENT,
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  username: process.env.REDDIT_USERNAME,
-  password: process.env.REDDIT_PASSWORD
-}
+// const CONFIG = {
+//   userAgent: process.env.USER_AGENT,
+//   clientId: process.env.CLIENT_ID,
+//   clientSecret: process.env.CLIENT_SECRET,
+//   username: process.env.REDDIT_USERNAME,
+//   password: process.env.REDDIT_PASSWORD
+// }
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
 
+
+
+/************************************************************ 
+THIRD PARTY API CALLS
+*************************************************************/
 
 //utilize the reddit api wrapper
 const reddit = new Snoowrap({
@@ -131,6 +136,62 @@ app.get('/fetchSoccerHighlights', (req, res) => {
       console.error('server: there was an error fetching the world soccer highlights', err)
     })
 })
+
+app.get('/nflHighlights', (req, res) => {
+  reddit.getSubreddit('nfl').getHot({limit: 100})
+    .then((response) => {
+      let filteredResponse = [];
+      response.forEach((topic) => {
+        if (topic.link_flair_text === 'Highlights' && topic.url.substr(8, 6) === 'stream') {
+          filteredResponse.push({
+            id: topic.id,
+            author: topic.author,
+            mediaEmbed: topic.media_embed,
+            secureMediaEmbed: topic.secure_media_embed,
+            redditPath: topic.permalink,
+            title: topic.title,
+            highlightUrl: topic.url,
+            upvotes: topic.ups
+          })
+        }
+      })
+      res.send(filteredResponse)
+    })
+    .catch((err) => {
+      console.error('server: there was an error fetching the nfl highlights', err);
+    })
+})
+
+app.get('/nhlHighlights', (req, res) => {
+  reddit.getSubreddit('hockey').getHot({limit: 100})
+    .then((response) => {
+      let filteredResponse = [];
+      response.forEach((topic) => {
+        if (topic.secure_media_embed.content) {
+          filteredResponse.push({
+            id: topic.id,
+            author: topic.author,
+            mediaEmbed: topic.media_embed,
+            secureMediaEmbed: topic.secure_media_embed,
+            redditPath: topic.permalink,
+            title: topic.title,
+            highlightUrl: topic.url,
+            upvotes: topic.ups
+          })
+        }
+      })
+      res.send(filteredResponse)
+    })
+    .catch((err) => {
+      console.error('server: there was an error fetching the nhl highlights', err);
+    })
+})
+
+
+/**************************************************************** 
+INTERNAL DB CALLS
+*****************************************************************/
+
 
 //get users saved highlights
 app.get('/fetchUserHighlights', (req, res) => {
