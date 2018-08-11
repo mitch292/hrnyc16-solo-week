@@ -2,7 +2,7 @@
 Catch up on the latest and greatest highlights from around the sports world.
 
 ## Installation and Setup Instructions
-You can access this application here: [highlights.andrewmitchell.io] (http://highlights.andrewmitchell.io/)
+You can access this application here: highlights.andrewmitchell.io [filter: HIGHLIGHTS] (http://highlights.andrewmitchell.io/)
 
 If you'd rather view this application on your local machine, you'll need node and npm installed globally.
 
