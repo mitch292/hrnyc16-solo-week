@@ -52,4 +52,4 @@ user data.  The only thing you might want to do is save highlights so you can sh
 Allowing users to save highlights to a unique ID accomplishes this without exposing the application to any unnecessary liability
 
 
-Thanks for taking a look!  Hope you enjoy the highlihgts!
+### Thanks for taking a look!  Hope you enjoy the highlights!
