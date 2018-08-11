@@ -53,7 +53,6 @@ class HomePage extends React.Component {
     
     axios.get('/fetchMLSHighlights')
       .then((response) => {
-        console.log('mls data', response.data)
         this.setState({
           mls: {
             highlights: response.data,
@@ -67,7 +66,6 @@ class HomePage extends React.Component {
     
     axios.get('/fetchMLBHighlights')
       .then((response) => {
-        console.log('mlb data', response.data)
         this.setState({
           mlb: {
             highlights: response.data,
@@ -81,7 +79,6 @@ class HomePage extends React.Component {
 
     axios.get('/fetchNBAHighlights')
       .then((response) => {
-        console.log('nba data', response.data)
         this.setState({
           nba: {
             highlights: response.data,
@@ -95,7 +92,6 @@ class HomePage extends React.Component {
     
     axios.get('/fetchSoccerHighlights')
       .then((response) => {
-        console.log('soccer data', response.data)
         this.setState({
           worldSoccer: {
             highlights: response.data,
@@ -109,7 +105,6 @@ class HomePage extends React.Component {
 
     axios.get('/nflHighlights')
       .then((response) => {
-        console.log('nfl data', response.data)
         this.setState({
           nfl: {
             highlights: response.data,
@@ -123,7 +118,6 @@ class HomePage extends React.Component {
 
     axios.get('/nhlHighlights')
       .then((response) => {
-        console.log('nhl data', response.data)
         this.setState({
           nhl: {
             highlights: response.data,

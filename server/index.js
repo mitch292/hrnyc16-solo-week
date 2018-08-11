@@ -2,17 +2,17 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const Snoowrap = require('snoowrap'); //reddit api wrapper
-const CONFIG = require('./../config.js');
+// const CONFIG = require('./../config.js');
 const db = require('../db/index.js');
 let port = process.env.PORT || 3000;
 
-// const CONFIG = {
-//   userAgent: process.env.USER_AGENT,
-//   clientId: process.env.CLIENT_ID,
-//   clientSecret: process.env.CLIENT_SECRET,
-//   username: process.env.REDDIT_USERNAME,
-//   password: process.env.REDDIT_PASSWORD
-// }
+const CONFIG = {
+  userAgent: process.env.USER_AGENT,
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  username: process.env.REDDIT_USERNAME,
+  password: process.env.REDDIT_PASSWORD
+}
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.json());
@@ -244,7 +244,6 @@ app.post('/saveOtherHighlight', (req, res) => {
 })
 
 app.delete('/removeSaved', (req, res) => {
-  console.log('req query', req.query)
   db.deleteSavedHighlight(req.query, (err, success) => {
     if (err) {
       console.error('there was an error removing this highlight from your profile', err)
